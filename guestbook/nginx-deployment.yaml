@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-argocd
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-argocd
+  template:
+    metadata:
+      labels:
+        app: nginx-argocd
+    spec:
+      containers:
+      - image: nginx:1.27.0-alpine
+        name: nginx
+        ports:
+        - containerPort: 80
