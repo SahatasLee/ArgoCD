@@ -18,3 +18,25 @@ kubectl config set-context --current --namespace=default
 # deploy app
 argocd app create guestbook --repo https://github.com/argoproj/argocd-example-apps.git --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace default
 ```
+
+## Login
+
+```bash
+argocd login <ARGOCD_SERVER>
+```
+
+
+## Deploy charts from helm repositories to argocd
+
+https://spacelift.io/blog/argocd-helm-chart
+
+```bash
+argocd app set mysql --values values.yaml
+
+argocd app create mysql \
+	--repo https://charts.bitnami.com/bitnami \
+	--helm-chart mysql \
+	--revision 11.1.9 \
+	--dest-server https://kubernetes.default.svc \
+    --dest-namespace default
+```
