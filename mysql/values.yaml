@@ -1,0 +1,5 @@
+auth:
+  rootPassword: "admin123456"
+primary:
+  service:
+    type: LoadBalancer

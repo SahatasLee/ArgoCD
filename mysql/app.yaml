@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mysql
+spec:
+  project: default
+  # When you specify the sources field, Argo CD will ignore the source (singular) field.
+  source:
+    path: charts
+    repoURL: 'https://gitlab.thaibevapp.com/root/test01.git'
+    targetRevision: HEAD
+  sources:
+  - repoURL: 'https://charts.bitnami.com/bitnami'
+    chart: mysql
+    targetRevision: 11.1.14
+    helm:
+      valueFiles:
+      - $values/charts/values.yaml
+  - repoURL: 'https://gitlab.thaibevapp.com/root/test01.git'
+    targetRevision: HEAD
+    ref: values
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
