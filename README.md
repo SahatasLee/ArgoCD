@@ -60,7 +60,7 @@ spec:
   # When you specify the sources field, Argo CD will ignore the source (singular) field.
   source:
     path: charts
-    repoURL: 'https://gitlab.thaibevapp.com/root/test01.git'
+    repoURL: 'https://github.com/SahatasLee/ArgoCD.git'
     targetRevision: HEAD
   sources:
   - repoURL: 'https://charts.bitnami.com/bitnami'
@@ -69,7 +69,7 @@ spec:
     helm:
       valueFiles:
       - $values/charts/values.yaml
-  - repoURL: 'https://gitlab.thaibevapp.com/root/test01.git'
+  - repoURL: 'https://github.com/SahatasLee/ArgoCD.git'
     targetRevision: HEAD
     ref: values
   destination:
