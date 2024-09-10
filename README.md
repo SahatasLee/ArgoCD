@@ -76,3 +76,5 @@ spec:
     server: 'https://kubernetes.default.svc'
     namespace: default
 ```
+
+## Argo CD Projects
