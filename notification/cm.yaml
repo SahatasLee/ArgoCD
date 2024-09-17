@@ -23,7 +23,6 @@ data:
     - recipients:
       - form
       - email:Sahatas.L@leapsolutions.co.th
-      - email:sahataslee@outlook.co.th
       - email:peerapong.p@leapsolutions.co.th
       triggers:
       - on-sync-status-unknown

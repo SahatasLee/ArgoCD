@@ -5,17 +5,17 @@ metadata:
 spec:
   project: default
   # When you specify the sources field, Argo CD will ignore the source (singular) field.
-  source:
-    path: charts
-    repoURL: 'https://github.com/SahatasLee/ArgoCD.git'
-    targetRevision: HEAD
+  # source:
+  #   path: charts
+  #   repoURL: 'https://github.com/SahatasLee/ArgoCD.git'
+  #   targetRevision: HEAD
   sources:
   - repoURL: 'https://charts.bitnami.com/bitnami'
     chart: mysql
     targetRevision: 11.1.14
     helm:
       valueFiles:
-      - $values/charts/values.yaml
+      - $values/mysql/values.yaml
   - repoURL: 'https://github.com/SahatasLee/ArgoCD.git'
     targetRevision: HEAD
     ref: values
