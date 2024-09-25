@@ -1,0 +1,8 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: TLSStore
+metadata:
+  name: argocd-tls
+  namespace: argocd
+spec:
+  defaultCertificate:
+    secretName:  tls-secret

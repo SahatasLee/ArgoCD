@@ -2,6 +2,12 @@
 
 https://argo-cd.readthedocs.io/en/stable/getting_started/
 
+1. [Install](#install)
+2. [Login](#login)
+3. [Helm Value](#helm-valuefile)
+
+## Install
+
 ```bash
 # Install
 kubectl create namespace argocd
@@ -22,7 +28,12 @@ argocd app create guestbook --repo https://github.com/argoproj/argocd-example-ap
 ## Login
 
 ```bash
+# First time login as admin
+argocd admin initial-password -n argocd
+# Login
 argocd login <ARGOCD_SERVER>
+# Change the password
+argocd account update-password
 ```
 
 
@@ -38,7 +49,7 @@ argocd app create mysql \
 	--helm-chart mysql \
 	--revision 11.1.9 \
 	--dest-server https://kubernetes.default.svc \
-    --dest-namespace default
+  --dest-namespace default
 ```
 
 ## Helm valueFile

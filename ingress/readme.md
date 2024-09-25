@@ -1,6 +1,6 @@
 # Traefik Ingress
 
-traefil version 2.7.x
+traefil version 2.6.x
 
 https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-2-ssl-termination-at-ingress-controller
 
@@ -19,13 +19,27 @@ This will install ArgoCD and configure the argocd-server deployment to use the -
 
 ```sh
 # Create configmap
-kubectl -n argocd create -f ingress/argocd-cmd-params-cm.yaml
+kubectl -n argocd apply -f ingress/argocd-cmd-params-cm.yaml
 
 # Recreate argocd-server to load config
-kubectl -n argocd delete cm argocd-server
+kubectl -n argocd rollout restart deployment argocd-server
 ```
 
-2. Create Ingress
+2. Create IngressRoute
+
+https://doc.traefik.io/traefik/v2.6/routing/providers/kubernetes-crd/#kind-tlsstore
+https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#ingressroute-crd
+
+```sh
+# Create tls secret
+kubectl -n argocd create -f tls-secret.yaml
+# Create tls store
+kubectl -n argocd create -f tls-store.yaml
+# Create ingress route
+kubectl -n argocd create -f ingressroute.yaml
+```
+
+3. Create Ingress (Optional)
 
 ```sh
 kubectl -n argocd create -f ingress.yaml
