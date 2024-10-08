@@ -5,6 +5,8 @@ https://argo-cd.readthedocs.io/en/stable/getting_started/
 1. [Install](#install)
 2. [Login](#login)
 3. [Helm Value](#helm-valuefile)
+4. [Projects](#argo-cd-projects)
+5. [Change Timezone](#change-timezone)
 
 ## Install
 
@@ -69,10 +71,10 @@ metadata:
 spec:
   project: default
   # When you specify the sources field, Argo CD will ignore the source (singular) field.
-  source:
-    path: charts
-    repoURL: 'https://github.com/SahatasLee/ArgoCD.git'
-    targetRevision: HEAD
+  # source:
+  #   path: charts
+  #   repoURL: 'https://github.com/SahatasLee/ArgoCD.git'
+  #   targetRevision: HEAD
   sources:
   - repoURL: 'https://charts.bitnami.com/bitnami'
     chart: mysql
@@ -89,3 +91,25 @@ spec:
 ```
 
 ## Argo CD Projects
+
+
+
+## Change timezone
+
+https://argocd-notifications.readthedocs.io/en/stable/templates/#change-the-timezone
+
+```yml
+kubectl -n argocd edit deployment argocd-notifications-controller
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-notifications-controller
+spec:
+(snip)
+    spec:
+      containers:
+      - name: argocd-notifications-controller
+        env:
+        - name: TZ
+          value: Asia/Tokyo
+```

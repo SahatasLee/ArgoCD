@@ -2,7 +2,11 @@
 
 [Argo CD Notifications Docs](https://argocd-notifications.readthedocs.io/en/stable/)
 
-## Installed
+1. [install](#install)
+2. [email](#email)
+3. [subscription](#subscriptions)
+
+## Install
 
 https://argocd-notifications.readthedocs.io/en/stable/
 
@@ -36,7 +40,7 @@ kubectl patch cm argocd-notifications-cm -n argocd --type merge -p '{"data": {"s
 
 https://argocd-notifications.readthedocs.io/en/stable/services/email/
 
-###
+### Example
 
 ```yaml
 apiVersion: v1
@@ -50,7 +54,7 @@ data:
     from: $email-username
 ```
 
-### Subscriptions
+## Subscriptions
 
 https://argocd-notifications.readthedocs.io/en/stable/subscriptions/
 
@@ -68,9 +72,16 @@ kubectl get app -n argocd
 kubectl patch app <my-app> -n argocd -p '{"metadata": {"annotations": {"notifications.argoproj.io/subscribe.on-sync-succeeded.email":"<my-email>"}}}' --type merge
 ```
 
-#### Default Subscriptions
+### Default Subscriptions
 
-The subscriptions might be configured globally in the argocd-notifications-cm ConfigMap using subscriptions field. The default subscriptions are applied to all applications. The trigger and applications might be configured using the triggers and selector fields:
+1. Default Subscriptions
+
+The subscriptions might be configured globally in the argocd-notifications-cm ConfigMap using subscriptions field. The default subscriptions are applied to all applications. The trigger and applications might be configured using the triggers and selector fields.
+
+2. Projects Subscriptions
+3. Applications Subscription
+
+#### Default Subscription Example
 
 ```yaml
 apiVersion: v1
@@ -101,22 +112,25 @@ data:
       - on-sync-status-unknown
 ```
 
+#### Default Subscription Example 2
+
 ```yaml
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
 data:
   service.email.email: |
     # username: $email-username
     # password: $email-password
-    host: 10.111.0.249
+    host: 10.1.1.1
     port: 25
-    from: sahatas@leapgio.cloud
+    from: sahatas@gmail.com
     insecure_skip_verify: true
   subscriptions: |
     # subscription for on-sync-status-unknown trigger notifications
     - recipients:
-      - email:Sahatas.L@leapsolutions.co.th
       - email:sahataslee@outlook.co.th
-      - email:peerapong.p@leapsolutions.co.th
       triggers:
       - on-sync-status-unknown
       - on-created
@@ -128,7 +142,19 @@ data:
       - on-sync-succeeded
 ```
 
-## App
+#### Project Subscription Example
+
+```sh
+
+```
+
+#### Application Subcription Example
+
+```sh
+
+```
+
+## Applications
 
 ```sh
 kubectl -n argocd get app
@@ -151,7 +177,7 @@ type: Opaque
 EOF
 ```
 
-slack
+### Slack
 
 ```yaml
 apiVersion: v1
@@ -162,7 +188,7 @@ stringData:
   slack-token: <auth-token>
 ```
 
-email
+### Email
 
 ```yaml
 apiVersion: v1
@@ -174,7 +200,7 @@ stringData:
   email-password: $PASSWORD
 ```
 
-slack and email
+### Slack and email
 
 ```yaml
 apiVersion: v1
@@ -187,7 +213,7 @@ stringData:
   slack-token: <auth-token>
 ```
 
-Update an Existing Secret
+### Update an Existing Secret
 
 ```sh
 # Encode value
@@ -205,4 +231,35 @@ kubectl create secret generic argocd-notifications-secret \
   --from-literal=line-token=new-value \
   -n argocd \
   --dry-run=client -o yaml > updated-secret.yaml
+```
+
+## Recipients
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+data:
+  # Contains centrally managed global application subscriptions
+  subscriptions: |
+    # subscription for all trigger notifications
+    - recipients:
+      - email:test@example.com
+      - slack:test2
+      triggers:
+      - on-sync-status-unknown
+      - on-created
+      - on-deleted
+      - on-deployed
+      - on-health-degraded
+      - on-sync-failed
+      - on-sync-running
+      - on-sync-succeeded
+    # subscription restricted to applications with matching labels only
+    - recipients:
+      - slack:test3
+      selector: test=true
+      triggers:
+      - on-sync-status-unknown
 ```
