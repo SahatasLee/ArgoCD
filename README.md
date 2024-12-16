@@ -13,10 +13,10 @@ https://argo-cd.readthedocs.io/en/stable/getting_started/
 ```bash
 # Install
 kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/ha/install.yaml
 
 # Delete
-kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/ha/install.yaml
 
 # set context
 kubectl config set-context --current --namespace=argocd
@@ -30,6 +30,12 @@ argocd app create guestbook --repo https://github.com/argoproj/argocd-example-ap
 ## Login
 
 ```bash
+# Linux install argocd cli
+VERSION=$(curl -L -s https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION)
+curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v$VERSION/argocd-linux-amd64
+sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+rm argocd-linux-amd64
+
 # First time login as admin
 argocd admin initial-password -n argocd
 # Login

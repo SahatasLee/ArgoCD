@@ -1,6 +1,11 @@
-# Traefik Ingress
+# Ingress
 
-traefil version 2.6.x
+- Traefik
+- nginx
+
+## Traefik
+
+traefik version 2.6.x
 
 https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-2-ssl-termination-at-ingress-controller
 
@@ -44,3 +49,6 @@ kubectl -n argocd create -f ingressroute.yaml
 ```sh
 kubectl -n argocd create -f ingress.yaml
 ```
+
+## Nginx
+
