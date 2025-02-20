@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-grpc-ingress
+  namespace: argocd
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argo-leapdevops-argocd-server
+            port:
+              name: https
+    host: grpc.argocd.leapsolutions.co.th
+  tls:
+  - hosts:
+    - grpc.argocd.leapsolutions.co.th
+    secretName: leap-cert

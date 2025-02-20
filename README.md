@@ -27,6 +27,14 @@ kubectl config set-context --current --namespace=default
 argocd app create guestbook --repo https://github.com/argoproj/argocd-example-apps.git --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace default
 ```
 
+## Helm
+
+```sh
+helm repo add argo https://argoproj.github.io/argo-helm
+helm upgrade --install argo-leapdevops argo/argo-cd -n argocd -f poc.yaml
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+
 ## Login
 
 ```bash

@@ -6,7 +6,9 @@ https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/
 
 ## Create User
 
-```yaml
+```sh
+kubectl get configmap argocd-cm -n argocd -o yaml > argocd-cm.yml
+
 # kubectl -n argocd edit cm argocd-cm
 data:
     # Add new user
