@@ -7,6 +7,7 @@ https://argo-cd.readthedocs.io/en/stable/getting_started/
 3. [Helm Value](#helm-valuefile)
 4. [Projects](#argo-cd-projects)
 5. [Change Timezone](#change-timezone)
+6. [Reset Password](#reset-password)
 
 ## Install
 
@@ -126,4 +127,10 @@ spec:
         env:
         - name: TZ
           value: Asia/Tokyo
+```
+
+## Reset Password
+
+```sh
+https://medium.com/@dulanjanalakmal/securing-argocd-a-step-by-step-guide-to-resetting-admin-passwords-bb5236208a64
 ```
